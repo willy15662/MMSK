@@ -10,7 +10,7 @@
 #define MULT2       26143
 
 //math
-//¶¥­¼ 
+//éšä¹˜ 
 int factorial(int n){
 	if((n==0)||(n==1)) return 1;
 	else return n*factorial(n-1);
@@ -62,7 +62,7 @@ double W_math(float lamda, float mu, int s, int k){
 double Wq_math(float lamda, float mu, int s, int k){
     return (Lq_math(lamda, mu, s, k) / lamdaEff(lamda, mu, s, k));
 }
-//*****************§äÀH¾÷¼Æ**************************
+//*****************æ‰¾éš¨æ©Ÿæ•¸**************************
 int Server_num = 0;
 static long zrng = 903;
 
@@ -85,12 +85,12 @@ float lcgrand()
     return (zi >> 7 | 1) / 16777216.0;
 }
 
-//¥Î¨Ó§äÀH¾÷¼Æ 
+//ç”¨ä¾†æ‰¾éš¨æ©Ÿæ•¸ 
 float expon (float mean){
     return -mean* log(lcgrand());
 }
 //**************************simulation***************************************
-//§ä³Ì§Ö³QªA°È§¹ªº 
+//æ‰¾æœ€å¿«è¢«æœå‹™å®Œçš„ 
 double find_min(double *next_dept_time, int S){
     double min = next_dept_time[1];
     Server_num = 1;
@@ -107,7 +107,7 @@ double find_min(double *next_dept_time, int S){
 void arrival (int S, double *Time_Arrival, int *server_status, double *next_dept_time, double* Time_arrival_sys, int * Q_limit);
 void depature (int S, double *Time_Arrival, int *server_status, double *next_dept_time, double* Time_arrival_sys);
 
-//³QªA°È§¹°}¦C¦V«e²¾ 
+//è¢«æœå‹™å®Œé™£åˆ—å‘å‰ç§» 
 void move (double* Time_arrival_sys, int S){
 	int i;
     for (i = 0; i < S ;i++){
@@ -127,7 +127,7 @@ int main()
     double W_ = 0, Wq_ =0, Lq_ = 0, L_ = 0;
 	int S = 0, K = 0, Number_of_customer = 0, i;
        
-    //ªì­È¿é¤J 
+    //åˆå€¼è¼¸å…¥ 
 	float lamda = 2;
 	interarrival_time = 60.0/lamda;
     next_arr_time = expon(interarrival_time);
@@ -149,28 +149,28 @@ int main()
     for (i=1;i<Q_limit+1;i++){
         Time_Arrival[i] = 0;
     }
-	for (i=1;i<=S;i++){ // ³]©w¤@­Ó«Ü¤jªºÂ÷¶}­È 
+	for (i=1;i<=S;i++){ // è¨­å®šä¸€å€‹å¾ˆå¤§çš„é›¢é–‹å€¼ 
         next_dept_time[i] = pow(10,30);
         server_status[i] = Idle;
     }
-// µ{¦¡°õ¦æ 
-	// while ÁÙ¦³«È¤H 
+// ç¨‹å¼åŸ·è¡Œ 
+	// while é‚„æœ‰å®¢äºº 
    while (aleady_fin_Custs < Number_of_customer){
-   	     //·í¤U­Ó¤HÁÙ¨S¨ì ¥ı°õ¦æÂ÷¶} 
+   	     //ç•¶ä¸‹å€‹äººé‚„æ²’åˆ° å…ˆåŸ·è¡Œé›¢é–‹ 
         if (next_arr_time > find_min(next_dept_time, S)){  
             depature (S, Time_Arrival, server_status, next_dept_time, Time_arrival_sys);
         }
-		//¤U­Ó¤H¨ì Åı¥L¶i¤J 
+		//ä¸‹å€‹äººåˆ° è®“ä»–é€²å…¥ 
         else {  
             arrival (S,Time_Arrival, server_status, next_dept_time, Time_arrival_sys, &Q_limit);
         }
     }
-	//¿é¥X 
+	//è¼¸å‡º 
 	printf("simulation\n");
-	L_ = Area_Under_System/sim_time;         //©Ò¦³¤H¦b¨t²Î¤¤ªº®É¶¡Á`©M / ¨t²ÎÁ`®É¶¡ 
-	Lq_ = Area_Under_Q/sim_time;             //©Ò¦³¤H¦bQueue¤¤ªº®É¶¡Á`©M / ¨t²ÎÁ`®É¶¡  
-	W_ = total_sys_delay/aleady_fin_Custs;   //¨t²Î¤¤Á`DelayÁ`©M / ³QªA°È¤H¼Æ   
-	Wq_ = Total_q_Delay/aleady_fin_Custs;    //Queue¤¤Á`DelayÁ`©M / ³QªA°È¤H¼Æ 
+	L_ = Area_Under_System/sim_time;         //æ‰€æœ‰äººåœ¨ç³»çµ±ä¸­çš„æ™‚é–“ç¸½å’Œ / ç³»çµ±ç¸½æ™‚é–“ 
+	Lq_ = Area_Under_Q/sim_time;             //æ‰€æœ‰äººåœ¨Queueä¸­çš„æ™‚é–“ç¸½å’Œ / ç³»çµ±ç¸½æ™‚é–“  
+	W_ = total_sys_delay/aleady_fin_Custs;   //ç³»çµ±ä¸­ç¸½Delayç¸½å’Œ / è¢«æœå‹™äººæ•¸   
+	Wq_ = Total_q_Delay/aleady_fin_Custs;    //Queueä¸­ç¸½Delayç¸½å’Œ / è¢«æœå‹™äººæ•¸ 
     printf("L_ = %.8f ", L_);
     printf("Lq_= %.8f ",Lq_);  
     printf ("W_= %.8f ", W_/60);
@@ -195,8 +195,8 @@ int main()
 
 void arrival (int S, double *Time_Arrival, int *server_status, double *next_dept_time, double* Time_arrival_sys, int * Q_limit){
 
-	sim_time = next_arr_time;      //§ó·s®É¶¡ 
-	next_arr_time = sim_time + expon(interarrival_time);   //§ó·s¤U­Ó¤H¨ìªº®É¶¡ 
+	sim_time = next_arr_time;      //æ›´æ–°æ™‚é–“ 
+	next_arr_time = sim_time + expon(interarrival_time);   //æ›´æ–°ä¸‹å€‹äººåˆ°çš„æ™‚é–“ 
 	
 	Time_Since_Last_Event = sim_time - Last_Event_Time;
 	Last_Event_Time = sim_time;
@@ -207,7 +207,7 @@ void arrival (int S, double *Time_Arrival, int *server_status, double *next_dept
 	    Area_Under_System += (Num_In_Queue + 1) * (Time_Since_Last_Event);
 	}
 	int i;
-	//­YªÅ¶¢ Åı¥L¶i¤J 
+	//è‹¥ç©ºé–’ è®“ä»–é€²å…¥ 
 	for (i=1;i<=S;i++){
 	    if (server_status[i] == Idle){
 	        (aleady_fin_Custs)++;
@@ -218,14 +218,14 @@ void arrival (int S, double *Time_Arrival, int *server_status, double *next_dept
 	        return;
 	    }
 	}
-	//­Ybusy±N®É¶¡¥[¶iÁ`®É¶¡¤º 
+	//è‹¥busyå°‡æ™‚é–“åŠ é€²ç¸½æ™‚é–“å…§ 
 	for(i=2;i<=S;i++){
 	    if(server_status[i] == Busy){
 	        Area_Under_System += (Time_Since_Last_Event);
 	    }
 	}
 	    (Num_In_Queue)++;
-	//­Yº¡¤H ½Ğ¥LÂ÷¶} 
+	//è‹¥æ»¿äºº è«‹ä»–é›¢é–‹ 
     if (Num_In_Queue> *Q_limit){
     	(Num_In_Queue)--;
     }
@@ -251,7 +251,7 @@ void depature (int S, double *Time_Arrival, int *server_status, double *next_dep
 	        Area_Under_System += (Time_Since_Last_Event);
 	    }
 	}
-	//¨S¤H¦bµ¥ 
+	//æ²’äººåœ¨ç­‰ 
 	if (Num_In_Queue ==0){
 	    server_status[Server_num] = Idle;
 	    next_dept_time [Server_num] = pow(10,30);
@@ -260,7 +260,7 @@ void depature (int S, double *Time_Arrival, int *server_status, double *next_dep
 	    (index)--;
 	    move(Time_arrival_sys, S);
 	}
-	//¦³¤H¦bµ¥ 
+	//æœ‰äººåœ¨ç­‰ 
 	else{
 		(Num_In_Queue)--;
 		q_Delay=sim_time-Time_Arrival[1];
